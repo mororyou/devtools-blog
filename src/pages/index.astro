@@ -1,0 +1,17 @@
+---
+import { getArticles } from '../hooks/article';
+import Layout from '../layouts/Layout.astro';
+
+const articles = await getArticles({fields: ["id", "title"]})
+---
+
+<Layout title="Welcome to Astro.">
+  <ul class="flex flex-col gap-y-4">
+    {articles.contents.map((content: any) => (
+      <a href={`/article/${content.id}`}>{content.title}</a>
+    ))}
+  </ul>
+</Layout>
+
+<style>
+</style>

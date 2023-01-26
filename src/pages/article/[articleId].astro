@@ -1,0 +1,25 @@
+---
+import { getArticle, getArticles } from "../../hooks/article";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const res = await getArticles({fields: ['id']})
+  return res.contents.map((content: any) => {
+    params: {
+      articleId: content.id
+    }
+  })
+}
+
+// export const prerender = true;
+
+const {articleId} = Astro.params;
+const blog = await getArticle(articleId as string);
+
+---
+
+<Layout title="">
+    <h1 class="title">{blog.title}</h1>
+    <p class="publishedAt">公開日時：{blog.publishedAt}</p>
+    <div class="post" set:html={blog.content}></div>
+</Layout>
