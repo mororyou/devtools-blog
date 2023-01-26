@@ -3,6 +3,8 @@ import { getArticles } from '../hooks/article';
 import Layout from '../layouts/Layout.astro';
 
 const articles = await getArticles({fields: ["id", "title"]})
+
+export const prerender = true;
 ---
 
 <Layout title="Welcome to Astro.">

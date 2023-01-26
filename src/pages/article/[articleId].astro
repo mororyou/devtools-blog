@@ -3,15 +3,15 @@ import { getArticle, getArticles } from "../../hooks/article";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
-  const res = await getArticles({fields: ['id']})
-  return res.contents.map((content: any) => {
+  const response = await getArticles({ fields: ['id'] })
+  return response.contents.map((content: any) => ({
     params: {
       articleId: content.id
     }
-  })
+  }))
 }
 
-// export const prerender = true;
+export const prerender = true;
 
 const {articleId} = Astro.params;
 const blog = await getArticle(articleId as string);
