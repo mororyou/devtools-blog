@@ -1,6 +1,6 @@
 ---
-
-import type { tag } from '../types/blog'
+import dayjs from 'dayjs';
+import type { tag } from '../types/blog';
 
 export interface Props {
   title: string
@@ -11,8 +11,7 @@ export interface Props {
 }
 
 const { href, title, description, tags, date } = Astro.props
-const format = new Date(date)
-console.log(format)
+const format = dayjs(date).format('YYYY/MM/DD')
 ---
 <a href={href} class="col-span-1">
   <article
@@ -56,7 +55,8 @@ console.log(format)
           &rarr;
         </span>
       </p>
-      <p class="text-xs">{date}公開</p>
+      <p class="text-xs">
+        <span class="mr-1">{format}</span>公開</p>
     </div>
   </article>
 </a>
