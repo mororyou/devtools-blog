@@ -1,11 +1,17 @@
 ---
-import Card from '../components/Card.astro';
+import Card from '../components/home/Card.astro';
+import ChildCard from '../components/home/ChildCard.astro';
 import { getArticles } from '../hooks/article';
 import Layout from '../layouts/Layout.astro';
 import type { blog } from '../types/blog';
 
-const query =  { fields: ["path", "title", "tags", "description", "publishedAt", 'updatedAt'], limit: 6 }
-const articles = await getArticles(query)
+// 新着記事
+const newQuery = { fields: ["path", "title", "tags", "description", "publishedAt", 'updatedAt'], limit: 6 }
+const articles = await getArticles(newQuery)
+// 人気記事
+const popularQuery = {fields: ["path", "title", "tags", "popular", "publishedAt", 'updatedAt'], limit: 5, filters: `popular[equals]true`}
+const popularArticles = await getArticles(popularQuery)
+// 
 
 export const prerender = true;
 ---
@@ -15,7 +21,7 @@ export const prerender = true;
     <div class="absolute inset-0 bg-white/75 sm:bg-transparent sm:bg-gradient-to-r sm:from-white/95 sm:to-white/25"></div>
   </div>
   <div class="flex flex-col px-4 md:px-8 lg:px-12 mb-12 md:mb-16 w-full">
-    <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 md:gap-x-8 lg:gap-x-12 gap-y-8 lg:gap-y-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 md:gap-x-8 lg:gap-x-12 gap-y-8 lg:gap-y-12 mb-8 md:mb-12 lg:mb-16">
         {articles.contents.map((content: blog) => (
           <Card
             title={content.title}
@@ -25,6 +31,13 @@ export const prerender = true;
             date={content.publishedAt}
           />          
         ))}
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      <div class="col-span-1 flex flex-col">
+        {popularArticles.contents.map((content: blog) => (
+          <ChildCard />
+        ))}
+      </div>
     </div>
   </div>
 </Layout>
