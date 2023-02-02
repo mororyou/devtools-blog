@@ -32,13 +32,12 @@ const { page, title, subtitle } = Astro.props
   }
 
   .c-button--gooey {
-    color: #0ea0ec;
     text-transform: uppercase;
     letter-spacing: 2px;
-    border: 2px solid #0ea0ec;
     border-radius: 0;
     position: relative;
     transition: all 700ms ease;
+    @apply text-themeBlue border-2 border-themeBlue;
   }
 
   .c-button--gooey .c-button__blobs {
@@ -54,13 +53,13 @@ const { page, title, subtitle } = Astro.props
   }
 
   .c-button--gooey .c-button__blobs div {
-    background-color: #0ea0ec;
     width: 34%;
     height: 100%;
     border-radius: 100%;
     position: absolute;
     transform: scale(1.4) translateY(125%) translateZ(0);
     transition: all 700ms ease;
+    @apply bg-themeBlue;
   }
 
   .c-button--gooey .c-button__blobs div:nth-child(1) {
