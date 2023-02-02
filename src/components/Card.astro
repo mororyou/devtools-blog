@@ -1,6 +1,5 @@
 ---
 
-import { dateCnv } from '../libs/utils'
 import type { tag } from '../types/blog'
 
 export interface Props {
@@ -12,8 +11,8 @@ export interface Props {
 }
 
 const { href, title, description, tags, date } = Astro.props
-const formatDate = dateCnv(date)
-
+const format = new Date(date)
+console.log(format)
 ---
 <a href={href} class="col-span-1">
   <article
@@ -57,7 +56,7 @@ const formatDate = dateCnv(date)
           &rarr;
         </span>
       </p>
-      <p class="text-xs">{formatDate}公開</p>
+      <p class="text-xs">{date}公開</p>
     </div>
   </article>
 </a>
