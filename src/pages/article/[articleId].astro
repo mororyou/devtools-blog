@@ -3,10 +3,10 @@ import { getArticle,getArticles } from "../../hooks/article";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
-  const response = await getArticles({ fields: ['id'] })
+  const response = await getArticles({ fields: ['path'] })
   return response.contents.map((content: any) => ({
     params: {
-      articleId: content.id
+      articleId: content.path
     }
   }))
 }
@@ -14,12 +14,15 @@ export async function getStaticPaths() {
 export const prerender = true;
 
 const {articleId} = Astro.params;
-const blog = await getArticle(articleId as string);
-
+const res = await getArticle({
+  filters: `path[equals]${articleId}`
+});
+const article = res.contents[0]
 ---
 
 <Layout title="">
-    <h1 class="title">{blog.title}</h1>
-    <p class="publishedAt">公開日時：{blog.publishedAt}</p>
-    <div class="post" set:html={blog.content}></div>
+
+    <h1 class="title">{article.title}</h1>
+    <p class="publishedAt">公開日時：{article.publishedAt}</p>
+    <div class="post" set:html={article.content}></div>
 </Layout>
